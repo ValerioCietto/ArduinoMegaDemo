@@ -1,6 +1,4 @@
-/* Sketck  RISICO_BIKE_SIMULATORE  ----  VER.15 del : 13-febbraio-2017  */
-/* Software - by IK1IFQ Gabriele -  */
-//----------------------------------------------------------------------------------
+
 #include <Wire.h>
 #include <Keypad.h>
 #include <EEPROM.h>

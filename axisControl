@@ -1,0 +1,231 @@
+void SuB_Asse_W() {
+
+
+   if (((Key_Val == 0x10) && (digitalRead(SwU_W)==LOW)) && (digitalRead(StartMotor)==LOW) )  {
+     
+     for (iSpeed_Asse_W = 0 ; iSpeed_Asse_W < 180; iSpeed_Asse_W++) {   
+         
+        analogWrite(pinPwm_Asse_W, iSpeed_Asse_W);  
+        digitalWrite(pinDir_Asse_W, HIGH);       //avanti
+ 
+         }
+       }
+          if (((Key_Val == 0x10) && (digitalRead(SwU_W)==LOW)))  {  A_W=1; }
+            else {  A_W=0; }
+       
+  //  if (((Key_Val == 0x11) && (menuOpz == 0x02) && (digitalRead(SwD_X)==LOW)) && (digitalRead(StartMotor)==LOW) )  { 
+      if (((Key_Val == 0x11) && (digitalRead(SwD_W)==LOW)) && (digitalRead(StartMotor)==LOW) )  {
+          
+      for (iSpeed_Asse_W = 0 ; iSpeed_Asse_W < 200; iSpeed_Asse_W++) {   
+         
+        analogWrite(pinPwm_Asse_W, iSpeed_Asse_W);
+         digitalWrite(pinDir_Asse_W, LOW);  A_W=0;   //indietro
+ 
+          }
+       }
+           if (((menuOpz != 0x14) || (digitalRead(StartMotor)==HIGH))   
+             || ((digitalRead(SwU_W)==HIGH)&&(Key_Val == 0x10)) || ((digitalRead(SwD_W)==HIGH)&&(Key_Val == 0x11)))   {  
+              analogWrite(pinPwm_Asse_W,0 ); (iSpeed_Asse_W = 0);  }
+    
+    }
+    void muovi_motore(){
+      analogWrite(pinPwm_Asse_W, 180);  
+      digitalWrite(pinDir_Asse_W, HIGH);       //avanti
+      delay(10);
+      analogWrite(pinPwm_Asse_W, 0);  
+      digitalWrite(pinDir_Asse_W, HIGH);       //avanti
+    }
+    void muovi_asse(int passi, char asse){
+      if(asse=='x'){
+        muovi_asse_X(passi);
+      }
+      else if(asse=='y'){
+        
+      }
+      else if(asse=='z'){
+        
+      }
+      else if(asse=='w'){
+        
+      }
+    }
+    void muovi_asse_X(int passi){
+      Serial.print("x:");
+      Serial.println(passi);
+      int mm_x = map(encoder_X  ,0,40500,0,300);
+      if(passi<8000){
+        for(int i =0;i<passi;i++){
+          Serial.println(encoder_X);
+          analogWrite(pinPwm_Asse_X, 180);
+          digitalWrite(pinDir_Asse_X, HIGH);    //indietro
+          delayMicroseconds(135);//135 1mm
+          
+        }
+        
+      }  
+    }
+    void stop_X(){
+      analogWrite(pinPwm_Asse_X, 0);
+    }
+    void muovi_asse_Y(int passi){
+      Serial.print("y:");
+      Serial.println(passi);
+      int mm_y = map(encoder_Y  ,0,40500,0,300);
+      if(passi<8000){
+        for(int i =0;i<passi;i++){
+          Serial.println(encoder_Y);
+          analogWrite(pinPwm_Asse_Y, 180);
+          digitalWrite(pinDir_Asse_Y, HIGH);    //indietro
+          delayMicroseconds(135);
+          
+        }
+        
+      }  
+    }
+    void stop_Y(){
+      analogWrite(pinPwm_Asse_Y, 0);
+    }
+    void muovi_asse_Z(int passi){
+      Serial.print("z:");
+      Serial.println(passi);
+      int mm_z = map(encoder_Z  ,0,40500,0,300);
+      if(passi<8000){
+        for(int i =0;i<passi;i++){
+          Serial.println(encoder_Z);
+          analogWrite(pinPwm_Asse_Z, 180);
+          digitalWrite(pinDir_Asse_Z, HIGH);    //indietro
+          delayMicroseconds(135);
+          
+        }
+        
+      }
+    
+    }
+    void stop_Z(){
+      analogWrite(pinPwm_Asse_Z, 0);
+    }
+    void muovi_asse_W(int passi){
+      Serial.print("w:");
+      Serial.println(passi);
+      int mm_W = map(encoder_W  ,0,40500,0,300);
+      if(passi<8000){
+        for(int i =0;i<passi;i++){
+          Serial.println(encoder_W);
+          analogWrite(pinPwm_Asse_W, 180);
+          digitalWrite(pinDir_Asse_W, HIGH);    //indietro
+          delayMicroseconds(135);
+          
+        }
+        
+      }
+    
+    }
+    void stop_W(){
+      analogWrite(pinPwm_Asse_W, 0);
+    }
+    void home_X(){
+       //encoder max 20000
+       while(digitalRead(SwD_X)==LOW){
+          Serial.println("moving back");
+          analogWrite(pinPwm_Asse_X, 255);
+          digitalWrite(pinDir_Asse_X, LOW);    //indietro
+        }
+        
+          analogWrite(pinPwm_Asse_X, 0);
+          digitalWrite(pinDir_Asse_X, LOW);    //indietro
+          
+        Serial.println("homed x");
+    }
+    void home_Y(){
+       //encoder max 20000
+       while(digitalRead(SwD_Y)==LOW){
+          Serial.println("moving back");
+          analogWrite(pinPwm_Asse_Y, 255);
+          digitalWrite(pinDir_Asse_Y, LOW);    //indietro
+        }
+        
+          analogWrite(pinPwm_Asse_Y, 0);
+          digitalWrite(pinDir_Asse_Y, LOW);    //indietro
+          Serial.println("homed y");
+        
+    }
+    void home_Z(){
+       //encoder max 20000
+       while(digitalRead(SwD_Z)==LOW){
+          Serial.println("moving back");
+          analogWrite(pinPwm_Asse_Z, 255);
+          digitalWrite(pinDir_Asse_Z, LOW);    //indietro
+        }
+        
+          analogWrite(pinPwm_Asse_Z, 0);
+          digitalWrite(pinDir_Asse_Z, LOW);    //indietro
+          
+        Serial.println("homed z");
+    }
+    void home_W(){
+       //encoder max 20000
+       while(digitalRead(SwD_W)==LOW){
+          Serial.println("moving back");
+          analogWrite(pinPwm_Asse_W, 255);
+          digitalWrite(pinDir_Asse_W, LOW);    //indietro
+        }
+        
+          analogWrite(pinPwm_Asse_W, 0);
+          digitalWrite(pinDir_Asse_W, LOW);    //indietro
+        Serial.println("homed w");  
+        
+    }
+    
+    void home_axis(){
+      boolean not_homed=true;
+      boolean homed_X=false;
+      boolean homed_Y=false;
+      boolean homed_Z=false;
+      boolean homed_W=false;
+      while(not_homed){
+        if(SwD_X==LOW && SwU_X==LOW){
+          analogWrite(pinPwm_Asse_X, 180);
+          digitalWrite(pinDir_Asse_X, LOW);    //indietro
+        }
+        else{
+          analogWrite(pinPwm_Asse_X, 0);
+          digitalWrite(pinDir_Asse_X, LOW);    //indietro
+          homed_X=true;
+        }
+        if(SwD_Y==LOW && SwU_Y==LOW){
+          analogWrite(pinPwm_Asse_Y, 180);
+          digitalWrite(pinDir_Asse_Y, LOW);    //indietro
+        }
+        else{
+          analogWrite(pinPwm_Asse_Y, 0);
+          digitalWrite(pinDir_Asse_Y, LOW);    //indietro
+          homed_Y=true;
+        }
+        if(SwD_W==LOW && SwU_W==LOW){
+          analogWrite(pinPwm_Asse_W, 180);
+          digitalWrite(pinDir_Asse_W, LOW);    //indietro
+        }
+        else{
+          analogWrite(pinPwm_Asse_W, 0);
+          digitalWrite(pinDir_Asse_W, LOW);  //indietro
+          homed_W=true;
+        }
+        if(SwD_Z==LOW && SwU_Z==LOW){
+          analogWrite(pinPwm_Asse_Z, 180);
+          digitalWrite(pinDir_Asse_Z, LOW);    //indietro
+        }
+        else{
+          analogWrite(pinPwm_Asse_Z, 0);
+          digitalWrite(pinDir_Asse_Z, LOW);     //indietro
+          homed_Z=true;
+        }
+
+        if(homed_X && homed_Y && homed_Z && homed_W){
+          not_homed=false;
+        }
+        
+      }
+      //exit
+    }
+//----------------------------------------------------------------------
+
